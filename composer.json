@@ -1,10 +1,20 @@
 {
   "name": "craftbeef/laravel-rdw",
+  "type": "package",
+  "keywords": [
+    "laravel",
+    "rdw",
+    "api",
+    "open data"
+  ],
   "description": "Laravel package for the RDW Open Data API",
+  "license": "MIT",
   "authors": [
     {
       "name": "Sam Kortstee",
-      "email": "samkortstee@hotmail.com"
+      "email": "samkortstee@hotmail.com",
+      "homepage": "github.com/craftbeef/laravel-rdw-api",
+      "role": "Developer"
     }
   ],
   "autoload": {
