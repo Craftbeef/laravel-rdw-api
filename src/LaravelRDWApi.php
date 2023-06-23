@@ -5,6 +5,7 @@ namespace Craftbeef\LaravelRdwApi;
 use Craftbeef\LaravelRdwApi\exceptions\InvalidEndPointException;
 use Craftbeef\LaravelRdwApi\exceptions\InvalidFuelTypeException;
 use Craftbeef\LaravelRdwApi\exceptions\InvalidVehicleLicenseException;
+use Craftbeef\LaravelRdwApi\exceptions\RDWApiException;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -15,6 +16,8 @@ class LaravelRDWApi
         'vehicles_fuel' => '8ys7-d773',
         'vehicles_classes' => 'kmfi-hrps',
         'vehicles' => 'm9d7-ebf2',
+        'axles' => '3huj-srit',
+        'vehicles_body_types' => 'vezc-m2t6',
     ];
 
     protected array $fueltypes = [
@@ -56,14 +59,14 @@ class LaravelRDWApi
      * @return array The data of the vehicle.
      * @throws InvalidVehicleLicenseException|GuzzleException If the license plate is invalid or the data is empty.
      */
-    public function getVehicleByLicenseplate($licenseplate)
+    public function getVehicleByLicenseplate(string $licenseplate): array
     {
         try {
             $url = $this->endpoints['vehicles'] . '.json?kenteken=' . $this->formatLicensePlate($licenseplate);
             $response = $this->client->request('GET', $url);
             $data = json_decode($response->getBody(), true);
             if (empty($data)) {
-                throw new InvalidVehicleLicenseException();
+                throw new RDWApiException();
             }
             return $data;
         } catch (Exception $e) {
@@ -77,7 +80,7 @@ class LaravelRDWApi
      * @param string $licenseplate The license plate to format.
      * @return string The formatted license plate.
      */
-    public function formatLicensePlate($licenseplate)
+    public function formatLicensePlate($licenseplate): string
     {
         $licenseplate = strtoupper($licenseplate);
         return preg_replace('/\W/', '', $licenseplate);
@@ -91,7 +94,7 @@ class LaravelRDWApi
      * @throws GuzzleException If the endpoint is invalid or the data is empty.
      * @throws InvalidEndPointException If the endpoint is invalid or the data is empty.
      */
-    public function getVehiclesByVehicleClass($vehicleClass)
+    public function getVehiclesByVehicleClass(string $vehicleClass): array
     {
         try {
             $url = $this->endpoints['vehicles_classes'] . '.json?voertuigklasse_omschrijving=' . $vehicleClass;
@@ -116,7 +119,7 @@ class LaravelRDWApi
      * @throws GuzzleException If the fuel type is invalid or the data is empty.
      * @throws InvalidFuelTypeException If the fuel type is invalid or the data is empty.
      */
-    public function getVehiclesByFuelType($fuelType)
+    public function getVehiclesByFuelType(string $fuelType): array
     {
         try {
             if (!in_array($fuelType, $this->fueltypes)) {
@@ -153,6 +156,52 @@ class LaravelRDWApi
             return $data;
         } catch (Exception $e) {
             throw new InvalidEndPointException();
+        }
+    }
+
+    /**
+     * Get the axles of a vehicle by license plate.
+     *
+     * @param string $licenseplate The license plate of the vehicle.
+     * @return array The data of the axles of the vehicle.
+     * @throws GuzzleException If the endpoint is invalid or the data is empty.
+     * @throws InvalidVehicleLicenseException If the license plate is invalid or the data is empty.
+     */
+    public function getVehicleAxels(string $licenseplate): array
+    {
+        try {
+            $url = $this->endpoints['axles'] . '.json?kenteken=' . $this->formatLicensePlate($licenseplate);
+            $response = $this->client->request('GET', $url);
+            $data = json_decode($response->getBody(), true);
+            if (empty($data)) {
+                throw new RDWApiException();
+            }
+            return $data;
+        } catch (Exception $e) {
+            throw new InvalidVehicleLicenseException();
+        }
+    }
+
+    /**
+     * Get the body types of a vehicle by license plate.
+     *
+     * @param string $licenseplate The license plate of the vehicle.
+     * @return array The data of the body types of the vehicle.
+     * @throws GuzzleException If the endpoint is invalid or the data is empty.
+     * @throws InvalidVehicleLicenseException If the license plate is invalid or the data is empty.
+     */
+    public function getVehicleBodyType(string $licenseplate): array
+    {
+        try {
+            $url = $this->endpoints['vehicles_body_types'] . '.json?kenteken=' . $this->formatLicensePlate($licenseplate);
+            $response = $this->client->request('GET', $url);
+            $data = json_decode($response->getBody(), true);
+            if (empty($data)) {
+                throw new RDWApiException();
+            }
+            return $data;
+        } catch (Exception $e) {
+            throw new InvalidVehicleLicenseException();
         }
     }
 }
