@@ -11,7 +11,7 @@ It is based on the [RDW API](https://opendata.rdw.nl/browse?category=Voertuigen&
 You can install the package via composer:
 
 ```bash
-composer require craftbeef/laravel-rdw
+composer require craftbeef/laravel-rdw-api
 ```
 
 ## Credits
