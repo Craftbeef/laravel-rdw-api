@@ -1,0 +1,29 @@
+{
+  "name": "craftbeef/laravel-rdw",
+  "description": "Laravel package for the RDW Open Data API",
+  "authors": [
+    {
+      "name": "Sam Kortstee",
+      "email": "samkortstee@hotmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Craftbeef\\LaravelRdwApi\\": "src/"
+    }
+  },
+  "require": {
+    "guzzlehttp/guzzle": "^7.0.1",
+    "ext-json": "*"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Craftbeef\\LaravelRdwApi\\LaravelRdwApiServiceProvider"
+      ]
+    }
+  }
+}
