@@ -4,8 +4,8 @@ use Exception;
 
 class RDWApiException extends Exception
 {
-    public function __construct($code = 0, $message = 'An error occurred while fetching data from the RDW API')
+    public function __construct()
     {
-        parent::__construct($message, $code);
+        parent::__construct('An error occurred while fetching data from the RDW API');
     }
 }
