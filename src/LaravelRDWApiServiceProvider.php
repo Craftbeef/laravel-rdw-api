@@ -2,7 +2,6 @@
 
 namespace Craftbeef\LaravelRdwApi;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelRDWApiServiceProvider extends ServiceProvider
@@ -29,7 +28,9 @@ class LaravelRDWApiServiceProvider extends ServiceProvider
 
         // Register the main class to use with the facade
         $this->app->singleton(LaravelRDWApi::class, function () {
-            return new LaravelRDWApi;
+            return new LaravelRDWApi();
         });
+
+        $this->app->alias(LaravelRDWApi::class, 'RDWApi');
     }
 }

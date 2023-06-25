@@ -33,7 +33,10 @@
     "laravel": {
       "providers": [
         "Craftbeef\\LaravelRdwApi\\LaravelRdwApiServiceProvider"
-      ]
+      ],
+      "aliases": {
+        "RDW": "Craftbeef\\LaravelRdwApi\\Facades\\RDW"
+      }
     }
   }
 }

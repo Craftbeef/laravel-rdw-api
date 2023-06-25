@@ -2,12 +2,13 @@
 
 namespace Craftbeef\LaravelRdwApi\facades;
 
+use Craftbeef\LaravelRdwApi\LaravelRDWApi;
 use Illuminate\Support\Facades\Facade;
 
-class RDWFacade extends Facade
+class RDW extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'RDW';
+        return LaravelRDWApi::class;
     }
 }
